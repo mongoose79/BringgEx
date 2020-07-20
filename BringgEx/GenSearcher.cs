@@ -80,7 +80,7 @@ namespace BringgEx
             return false;
         }
 
-        public bool IsGenVaild(string gen)
+        public bool IsGenValid(string gen)
         {
             string prefix = "AAAAAAAAAAA";
             if (gen.StartsWith(prefix) && gen.Length > prefix.Length)

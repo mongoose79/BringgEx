@@ -43,7 +43,7 @@ namespace BringgEx
         {
             string sourceGen = GetSourceGen(rawUrl);
             var genSearcher = new GenSearcher();
-            if (string.IsNullOrEmpty(sourceGen) || !genSearcher.IsGenVaild(sourceGen))
+            if (string.IsNullOrEmpty(sourceGen) || !genSearcher.IsGenValid(sourceGen))
             {
                 response.StatusCode = (int)HttpStatusCode.BadRequest;
             }

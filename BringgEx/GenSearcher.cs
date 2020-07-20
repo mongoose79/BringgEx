@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.IO;
 
 namespace BringgEx
@@ -7,7 +7,7 @@ namespace BringgEx
     public class GenSearcher
     {
         private readonly string _filePath;
-        private readonly List<long> _genIndexes = new List<long>();
+        private readonly ConcurrentBag<long> _genIndexes = new ConcurrentBag<long>();
 
         const short PrefixCount = 11;
 

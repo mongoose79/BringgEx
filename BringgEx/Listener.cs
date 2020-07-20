@@ -27,34 +27,37 @@ namespace BringgEx
                 var request = context?.Request;
                 var response = context?.Response;
                 var rawUrl = request?.RawUrl;
-                string sourceGen = GetSourceGen(rawUrl);
-
                 if (response != null)
                 {
-                    var genSearcher = new GenSearcher();
-                    if (string.IsNullOrEmpty(sourceGen) || !genSearcher.IsGenVaild(sourceGen))
-                    {
-                        response.StatusCode = (int) HttpStatusCode.BadRequest;
-                    }
-                    else
-                    {
-                        sourceGen = RemovePrefix(sourceGen);
-                        if (genSearcher.IsGenExist(sourceGen))
-                        {
-                            response.StatusCode = (int)HttpStatusCode.OK;
-                        }
-                        else
-                        {
-                            response.StatusCode = (int)HttpStatusCode.NotFound;
-                        }
-                    }
-
+                    ProcessResult(rawUrl, response);
                     context.Response.Close();
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error occurred while processing the request: {ex.Message}");
+            }
+        }
+
+        private void ProcessResult(string rawUrl, HttpListenerResponse response)
+        {
+            string sourceGen = GetSourceGen(rawUrl);
+            var genSearcher = new GenSearcher();
+            if (string.IsNullOrEmpty(sourceGen) || !genSearcher.IsGenVaild(sourceGen))
+            {
+                response.StatusCode = (int)HttpStatusCode.BadRequest;
+            }
+            else
+            {
+                sourceGen = RemovePrefix(sourceGen);
+                if (genSearcher.IsGenExist(sourceGen))
+                {
+                    response.StatusCode = (int)HttpStatusCode.OK;
+                }
+                else
+                {
+                    response.StatusCode = (int)HttpStatusCode.NotFound;
+                }
             }
         }
 
